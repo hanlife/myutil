@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html style="background-color: #000">
+<title>
+加载中
+</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <script type="text/javascript" src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js" charset="utf-8"></script>
+    <script src="https://imgcache.qq.com/tencentvideo_v1/tvp/js/tvp.player_v2_zepto.js?visitDstTime=1" charset="utf-8"></script>
+    <script type="text/javascript" src="https://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
+    <script src="https://v.qq.com/iframe/tvp.config.js" charset="utf-8"></script>
+    <script src="clipboard.js" charset="utf-8"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" charset="utf-8"></script>
+    <script src="https://danstyle.oss-cn-shenzhen.aliyuncs.com/video/js/foot_ad.js?v=3"></script>
+    <style>
+         .buttonDiv{
+            border: 2px;
+            border-radius: 4px;
+            filter: alpha(opacity=40);
+            text-align:center; 
+            position:fixed;
+            z-index:999;
+            bottom:0px; 
+            width:100%;
+            background:#000;
+        }
+        .content{
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: #666666;
+            position: fixed;
+            width: 100%;
+            height: 200px;
+            top: 30%;
+            background-image: url(https://wx3.sinaimg.cn/large/a15b4afegy1fo7xkuifxeg200w00wdfp);
+        }
+    </style>
+    <link href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css" rel="stylesheet" />
+    <link href="https://danstyle.oss-cn-shenzhen.aliyuncs.com/video/css/index.css" rel="stylesheet" />
+</head>
+<body>
+<div class="content">
+<div id="videoCon" class="video"></div>
+<button id="shareBtn">分享</button>
+</div>
+<!-- img就是遮罩层  SRC是图片路径 -->
+<img src="https://wx3.sinaimg.cn/large/a15b4afegy1fml5or8adwj20bi0kg3z6" id="fenxiang" style="width:100%;position:fixed;z-index:998;top:0;left:0;display:none;cursor: pointer">
+    <div  class="buttonDiv">
+<script>document.writeln(xiaosen_url);</script>
+<!-- <script>document.writeln(foot_img);</script> -->
+        </a>
+    </div>
+<script src="video.api.js?v=4" charset="utf-8"></script>
+</body>
+</html>

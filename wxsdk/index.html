@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <button id="getLocation">获取定位</button>
+    <button id="getAddress">获取地址</button>
+    <button id="share">微信分享</button>
+</body>
+<script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script>
+    $(function () {
+        var parmsUrl = location.href.split('#')[0];
+        // // 签名配置
+        // wx.config({
+        //     debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        //     appId: "wxc85dbc62dd24d971", // 必填，公众号的唯一标识
+        //     timestamp: 1523326406, // 必填，生成签名的时间戳
+        //     nonceStr: 'dfc6b1ee-a066-41f6-b3e5-3690f6abe666', // 必填，生成签名的随机串
+        //     signature: 'a1de5527b0d333a2c915a865f8c1886f4b207fcd',// 必填，签名，见附录1
+        //     jsApiList: ['getLocation', 'openAddress'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        // });
+
+        $.post('/cyy-app/wx/getSubscriptionAccessToken', { url: parmsUrl }, function (res) {
+            // 签名配置
+            console.log(res)
+            wx.config({
+                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: "wx2967c49b49910205", // 必填，公众号的唯一标识
+                timestamp: parseInt(res.timestamp), // 必填，生成签名的时间戳
+                nonceStr: res.nonceStr, // 必填，生成签名的随机串
+                signature: res.signature,// 必填，签名，见附录1
+                jsApiList: ['getLocation', 'openAddress', 'checkJsApi', 'onMenuShareAppMessage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
+            wx.ready(function () {
+                wx.checkJsApi({
+                    jsApiList: ['getLocation', 'openAddress', 'onMenuShareAppMessage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+                    success: function (res) {
+                        // 以键值对的形式返回，可用的api值true，不可用为false
+                        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+                    }
+                });
+            })
+        })
+        $('#share').click(function () {
+            alert('点击右上角菜单，分享给好友')
+            wx.onMenuShareAppMessage({
+                title: '测试分享PDF链接', // 分享标题
+                desc: '测试分享PDF链接', // 分享描述
+                link: 'http://www.caiyoyo.com:8025/template_generate/20180607/pdf/20180131183347302436certifi_form.pdf', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'https://www.caiyoyo.com/wx/logo.png', // 分享图标
+                type: 'link', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                success: function () {
+                    alert('分享成功')
+                }
+            });
+        })
+        $('#getLocation').click(function () {
+            wx.openAddress({
+                success: function (res) {
+                    var userName = res.userName; // 收货人姓名
+                    var postalCode = res.postalCode; // 邮编
+                    var provinceName = res.provinceName; // 国标收货地址第一级地址（省）
+                    var cityName = res.cityName; // 国标收货地址第二级地址（市）
+                    var countryName = res.countryName; // 国标收货地址第三级地址（国家）
+                    var detailInfo = res.detailInfo; // 详细收货地址信息
+                    var nationalCode = res.nationalCode; // 收货地址国家码
+                    var telNumber = res.telNumber; // 收货人手机号码
+                }
+            });
+        })
+        $('#getLocation').click(function () {
+            wx.getLocation({
+                type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                success: function (res) {
+                    var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                    var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                    var speed = res.speed; // 速度，以米/每秒计
+                    var accuracy = res.accuracy; // 位置精度
+                    alert("res.latitude："+res.latitude)
+                }
+            });
+        })
+    })
+
+</script>
+
+</html>
